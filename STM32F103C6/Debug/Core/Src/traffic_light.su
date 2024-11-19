@@ -1,0 +1,9 @@
+traffic_light.c:10:6:enableRed1	8	static
+traffic_light.c:16:6:enableYellow1	8	static
+traffic_light.c:21:6:enableGreen1	8	static
+traffic_light.c:27:6:enableRed2	8	static
+traffic_light.c:32:6:enableYellow2	8	static
+traffic_light.c:37:6:enableGreen2	8	static
+traffic_light.c:43:6:toggleREDs	8	static
+traffic_light.c:51:6:toggleGREENs	8	static
+traffic_light.c:59:6:toggleYELLOWs	8	static
