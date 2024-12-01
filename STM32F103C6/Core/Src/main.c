@@ -30,7 +30,6 @@
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
-
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -39,9 +38,6 @@
 
 /* Private macro -------------------------------------------------------------*/
 /* USER CODE BEGIN PM */
-void LEDTEST () {
-	HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
-}
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
@@ -98,15 +94,20 @@ int main(void)
 
   initWaitingTime();
   initVar();
+
+  SCH_Init();
+  SCH_Add_Task(timerRun1, 10, 10);
+  SCH_Add_Task(timerRun2, 10, 10);
+  SCH_Add_Task(timerRun3, 10, 10);
+  SCH_Add_Task(fsm_automatic, 100, 100);
+
   /* USER CODE END 2 */
 
+//  fsm_scheduler_init();
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  SCH_Add_Task(LEDTEST, 1, 1000);
   while (1)
   {
-	  fsm_automatic();
-	  fsm_manual();
 	  SCH_Dispatch_Tasks();
     /* USER CODE END WHILE */
 
@@ -254,8 +255,6 @@ static void MX_GPIO_Init(void)
 /* USER CODE BEGIN 4 */
 void HAL_TIM_PeriodElapsedCallback ( TIM_HandleTypeDef * htim )
 {
-	timerRun();
-	getKeyInput();
 	SCH_Update();
 }
 /* USER CODE END 4 */

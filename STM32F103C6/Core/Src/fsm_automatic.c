@@ -15,7 +15,7 @@ void fsm_automatic(void){
 		switch (statusAUTO1){
 			case INIT:
 				statusAUTO1 = STATE_RED;
-//				setTimer1(100);
+				setTimer1(100);
 				break;
 			case STATE_RED:
 				if (timer1_flag == 1){

@@ -10,6 +10,7 @@
 
 #include "main.h"
 #include "global.h"
+#include "scheduler.h"
 
 void fsm_automatic(void);
 
