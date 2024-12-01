@@ -30,15 +30,7 @@ void setTimer8(int duration);
 void setTimer9(int duration);
 void setTimer10(int duration);
 
-void timerRun1();
-void timerRun2();
-void timerRun3();
-void timerRun4();
-void timerRun5();
-void timerRun6();
-void timerRun7();
-void timerRun8();
-void timerRun9();
+void timerRun();
 
 
 #endif /* INC_SOFTWARE_TIMER_H_ */

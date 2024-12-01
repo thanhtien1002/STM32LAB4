@@ -96,14 +96,13 @@ int main(void)
   initVar();
 
   SCH_Init();
-  SCH_Add_Task(timerRun1, 10, 10);
-  SCH_Add_Task(timerRun2, 10, 10);
-  SCH_Add_Task(timerRun3, 10, 10);
+  SCH_Add_Task(timerRun, 10, 10);
   SCH_Add_Task(fsm_automatic, 100, 100);
+  SCH_Add_Task(getKeyInput, 20, 10);
+  SCH_Add_Task(fsm_manual, 200, 100);
 
   /* USER CODE END 2 */
 
-//  fsm_scheduler_init();
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
