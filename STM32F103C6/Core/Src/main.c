@@ -100,7 +100,6 @@ int main(void)
   SCH_Add_Task(fsm_automatic, 100, 100);
   SCH_Add_Task(getKeyInput, 20, 10);
   SCH_Add_Task(fsm_manual, 200, 100);
-
   /* USER CODE END 2 */
 
   /* Infinite loop */

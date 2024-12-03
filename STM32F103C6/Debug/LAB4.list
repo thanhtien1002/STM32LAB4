@@ -27,23 +27,23 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   ALLOC
  11 .ARM.attributes 00000029  00000000  00000000  00020060  2**0
                   CONTENTS, READONLY
- 12 .debug_info   0000a3b5  00000000  00000000  00020089  2**0
+ 12 .debug_info   0000a3b3  00000000  00000000  00020089  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 13 .debug_abbrev 00001d72  00000000  00000000  0002a43e  2**0
+ 13 .debug_abbrev 00001d56  00000000  00000000  0002a43c  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 14 .debug_aranges 00000b18  00000000  00000000  0002c1b0  2**3
+ 14 .debug_aranges 00000b18  00000000  00000000  0002c198  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 15 .debug_ranges 000009f0  00000000  00000000  0002ccc8  2**3
+ 15 .debug_ranges 000009f0  00000000  00000000  0002ccb0  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 16 .debug_macro  000171bd  00000000  00000000  0002d6b8  2**0
+ 16 .debug_macro  000171bd  00000000  00000000  0002d6a0  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .debug_line   0000ce1d  00000000  00000000  00044875  2**0
+ 17 .debug_line   0000ce1b  00000000  00000000  0004485d  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_str    0008264c  00000000  00000000  00051692  2**0
+ 18 .debug_str    0008264c  00000000  00000000  00051678  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .comment      00000053  00000000  00000000  000d3cde  2**0
+ 19 .comment      00000053  00000000  00000000  000d3cc4  2**0
                   CONTENTS, READONLY
- 20 .debug_frame  00002b60  00000000  00000000  000d3d34  2**2
+ 20 .debug_frame  00002b60  00000000  00000000  000d3d18  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -2040,7 +2040,7 @@ int main(void)
  8000e0a:	21c8      	movs	r1, #200	; 0xc8
  8000e0c:	4806      	ldr	r0, [pc, #24]	; (8000e28 <main+0x64>)
  8000e0e:	f000 f91d 	bl	800104c <SCH_Add_Task>
-//  fsm_scheduler_init();
+
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
@@ -2429,7 +2429,6 @@ __STATIC_FORCEINLINE void __disable_irq(void)
 08001022 <SCH_Init>:
 #include "scheduler.h"
 
-// Khởi tạo bộ lập lịch
 void SCH_Init() {
  8001022:	b580      	push	{r7, lr}
  8001024:	b082      	sub	sp, #8
@@ -2460,7 +2459,7 @@ void SCH_Init() {
 
 0800104c <SCH_Add_Task>:
 
-// Thêm tác vụ mới vào bộ lập lịch
+
 void SCH_Add_Task(void (*pFunction) (), uint32_t DELAY, uint32_t PERIOD) {
  800104c:	b480      	push	{r7}
  800104e:	b087      	sub	sp, #28
@@ -2468,7 +2467,7 @@ void SCH_Add_Task(void (*pFunction) (), uint32_t DELAY, uint32_t PERIOD) {
  8001052:	60f8      	str	r0, [r7, #12]
  8001054:	60b9      	str	r1, [r7, #8]
  8001056:	607a      	str	r2, [r7, #4]
-    DELAY = DELAY / TICK;  // Đổi DELAY và PERIOD về đơn vị TICK
+    DELAY = DELAY / TICK;
  8001058:	68bb      	ldr	r3, [r7, #8]
  800105a:	4a28      	ldr	r2, [pc, #160]	; (80010fc <SCH_Add_Task+0xb0>)
  800105c:	fba2 2303 	umull	r2, r3, r2, r3
@@ -2486,7 +2485,7 @@ void SCH_Add_Task(void (*pFunction) (), uint32_t DELAY, uint32_t PERIOD) {
  8001070:	2300      	movs	r3, #0
  8001072:	75fb      	strb	r3, [r7, #23]
  8001074:	e00c      	b.n	8001090 <SCH_Add_Task+0x44>
-        if (SCH_tasks_G[index].pTask == 0) break;  // Tìm phần tử trống
+        if (SCH_tasks_G[index].pTask == 0) break;  // Find an empty element
  8001076:	7dfa      	ldrb	r2, [r7, #23]
  8001078:	4921      	ldr	r1, [pc, #132]	; (8001100 <SCH_Add_Task+0xb4>)
  800107a:	4613      	mov	r3, r2
@@ -2505,17 +2504,17 @@ void SCH_Add_Task(void (*pFunction) (), uint32_t DELAY, uint32_t PERIOD) {
  8001092:	2b27      	cmp	r3, #39	; 0x27
  8001094:	d9ef      	bls.n	8001076 <SCH_Add_Task+0x2a>
  8001096:	e000      	b.n	800109a <SCH_Add_Task+0x4e>
-        if (SCH_tasks_G[index].pTask == 0) break;  // Tìm phần tử trống
+        if (SCH_tasks_G[index].pTask == 0) break;  // Find an empty element
  8001098:	bf00      	nop
     }
 
-    // Nếu không còn chỗ trống trong mảng
+    // If there is no space left in the array
     if (index == SCH_MAX_TASKS) return;
  800109a:	7dfb      	ldrb	r3, [r7, #23]
  800109c:	2b28      	cmp	r3, #40	; 0x28
  800109e:	d027      	beq.n	80010f0 <SCH_Add_Task+0xa4>
 
-    // Thêm tác vụ vào vị trí tìm được
+    // Add a task to a found location
     SCH_tasks_G[index].pTask = pFunction;
  80010a0:	7dfa      	ldrb	r2, [r7, #23]
  80010a2:	4917      	ldr	r1, [pc, #92]	; (8001100 <SCH_Add_Task+0xb4>)
@@ -2573,7 +2572,7 @@ void SCH_Add_Task(void (*pFunction) (), uint32_t DELAY, uint32_t PERIOD) {
 
 08001104 <SCH_Update_ListTask>:
 
-// Cập nhật danh sách tác vụ sau khi một tác vụ được xử lý
+
 void SCH_Update_ListTask(uint8_t index) {
  8001104:	b5b0      	push	{r4, r5, r7, lr}
  8001106:	b084      	sub	sp, #16
@@ -2614,7 +2613,7 @@ void SCH_Update_ListTask(uint8_t index) {
  8001146:	2b26      	cmp	r3, #38	; 0x26
  8001148:	d9e4      	bls.n	8001114 <SCH_Update_ListTask+0x10>
     }
-    SCH_Delete_Task(SCH_MAX_TASKS - 1);  // Xóa phần tử cuối cùng
+    SCH_Delete_Task(SCH_MAX_TASKS - 1);
  800114a:	2027      	movs	r0, #39	; 0x27
  800114c:	f000 f8ba 	bl	80012c4 <SCH_Delete_Task>
 }
@@ -2626,7 +2625,7 @@ void SCH_Update_ListTask(uint8_t index) {
 
 0800115c <SCH_Dispatch_Tasks>:
 
-// Đảm bảo chỉ một tác vụ được thực thi tại một thời điểm
+
 void SCH_Dispatch_Tasks() {
  800115c:	b5b0      	push	{r4, r5, r7, lr}
  800115e:	b086      	sub	sp, #24
@@ -2647,7 +2646,7 @@ void SCH_Dispatch_Tasks() {
  8001178:	681b      	ldr	r3, [r3, #0]
  800117a:	2b00      	cmp	r3, #0
  800117c:	d03d      	beq.n	80011fa <SCH_Dispatch_Tasks+0x9e>
-            (*SCH_tasks_G[index].pTask)();  // Gọi hàm của tác vụ
+            (*SCH_tasks_G[index].pTask)();
  800117e:	7dfa      	ldrb	r2, [r7, #23]
  8001180:	4923      	ldr	r1, [pc, #140]	; (8001210 <SCH_Dispatch_Tasks+0xb4>)
  8001182:	4613      	mov	r3, r2
@@ -2657,7 +2656,7 @@ void SCH_Dispatch_Tasks() {
  800118a:	440b      	add	r3, r1
  800118c:	681b      	ldr	r3, [r3, #0]
  800118e:	4798      	blx	r3
-            SCH_tasks_G[index].Runme--;  // Giảm số lần chạy của tác vụ
+            SCH_tasks_G[index].Runme--;
  8001190:	7dfa      	ldrb	r2, [r7, #23]
  8001192:	491f      	ldr	r1, [pc, #124]	; (8001210 <SCH_Dispatch_Tasks+0xb4>)
  8001194:	4613      	mov	r3, r2
@@ -2677,7 +2676,7 @@ void SCH_Dispatch_Tasks() {
  80011b0:	330c      	adds	r3, #12
  80011b2:	6019      	str	r1, [r3, #0]
 
-            // Xử lý và cập nhật tác vụ
+            // Processing and updating tasks
             sTask temp = SCH_tasks_G[index];
  80011b4:	7dfa      	ldrb	r2, [r7, #23]
  80011b6:	4916      	ldr	r1, [pc, #88]	; (8001210 <SCH_Dispatch_Tasks+0xb4>)
@@ -2692,7 +2691,7 @@ void SCH_Dispatch_Tasks() {
  80011c8:	c40f      	stmia	r4!, {r0, r1, r2, r3}
  80011ca:	682b      	ldr	r3, [r5, #0]
  80011cc:	6023      	str	r3, [r4, #0]
-            SCH_Update_ListTask(index);  // Cập nhật danh sách sau khi xóa tác vụ
+            SCH_Update_ListTask(index);  // Update the list after deleting a task
  80011ce:	7dfb      	ldrb	r3, [r7, #23]
  80011d0:	4618      	mov	r0, r3
  80011d2:	f7ff ff97 	bl	8001104 <SCH_Update_ListTask>
@@ -2735,7 +2734,7 @@ void SCH_Dispatch_Tasks() {
 
 08001214 <SCH_Update>:
 
-// Cập nhật trạng thái của các tác vụ, kiểm tra thời gian delay
+
 void SCH_Update() {
  8001214:	b480      	push	{r7}
  8001216:	b083      	sub	sp, #12
@@ -2744,7 +2743,7 @@ void SCH_Update() {
  800121a:	2300      	movs	r3, #0
  800121c:	71fb      	strb	r3, [r7, #7]
  800121e:	e046      	b.n	80012ae <SCH_Update+0x9a>
-        if (SCH_tasks_G[index].pTask != 0) {  // Kiểm tra xem có tác vụ hay không
+        if (SCH_tasks_G[index].pTask != 0) {
  8001220:	79fa      	ldrb	r2, [r7, #7]
  8001222:	4927      	ldr	r1, [pc, #156]	; (80012c0 <SCH_Update+0xac>)
  8001224:	4613      	mov	r3, r2
@@ -2839,7 +2838,6 @@ void SCH_Update() {
 
 080012c4 <SCH_Delete_Task>:
 
-// Xóa một tác vụ khỏi bộ lập lịch
 void SCH_Delete_Task(const uint8_t TASK_INDEX) {
  80012c4:	b480      	push	{r7}
  80012c6:	b083      	sub	sp, #12
